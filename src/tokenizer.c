@@ -77,15 +77,15 @@ char **tokenize(char *str)
 {
   int num_words = count_words(str);
   char **tokens = (char**)malloc(num_words*sizeof(char*));
-  char *endOfWord;
+  char *endOfWord, *temp;
   int i=0;
-  while(*str  || i < num_words){
-    str = word_start(str);
+  while(i < num_words){
+    temp = word_start(str);
     endOfWord = word_terminator(str);
    
 
     tokens[i] = copy_str(str, (endOfWord - str)); 
-    str++;
+    str = word_start(endOfWord);
     i++;
   }
   *tokens= '\0';
