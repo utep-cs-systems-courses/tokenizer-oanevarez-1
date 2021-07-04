@@ -42,7 +42,7 @@ char *word_terminator(char *word)
 int count_words(char *str)
 {
   int words =0;
-  while(*str != '\0'){
+  while(*str){
     str = word_start(str);
     if(non_space_char(*str)) words++;
     str = word_terminator(str);
@@ -53,7 +53,16 @@ int count_words(char *str)
 
 /* Returns a freshly allocated new zero-terminated string
    containing <len> chars from <inStr> */
-char *copy_str(char *inStr, short len);
+char *copy_str(char *inStr, short len)
+{
+  char *copy = (char*)malloc(len*sizeof(char));
+  while(*inStr){
+    *copy++ = *inStr++;
+  }
+  *copy='\0';
+  return copy;
+}
+
 
 /* Returns a freshly allocated zero-terminated vector of freshly allocated
    space-separated tokens from zero-terminated str.
@@ -64,7 +73,25 @@ char *copy_str(char *inStr, short len);
      tokens[2] = "string"
      tokens[3] = 0
 */
-char **tokenize(char* str);
+char **tokenize(char *str)
+{
+  int num_words = count_words(str);
+  char **tokens = (char**)malloc(num_words*sizeof(char*));
+  char *endOfWord;
+  int i=0;
+  while(*str  || i < num_words){
+    str = word_start(str);
+    endOfWord = word_terminator(str);
+   
+
+    tokens[i] = copy_str(str, (endOfWord - str)); 
+    str++;
+    i++;
+  }
+  *tokens= '\0';
+  return tokens;
+
+}
 
 /* Prints all tokens. */
 void print_tokens(char **tokens);
