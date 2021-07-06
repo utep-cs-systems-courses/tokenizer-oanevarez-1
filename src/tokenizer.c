@@ -80,7 +80,7 @@ char **tokenize(char *str)
   char *endOfWord, *temp;
   int i=0;
   while(i < num_words){
-    temp = word_start(str);
+    str = word_start(str);
     endOfWord = word_terminator(str);
    
 
@@ -94,8 +94,20 @@ char **tokenize(char *str)
 }
 
 /* Prints all tokens. */
-void print_tokens(char **tokens);
+void print_tokens(char **tokens)
+{
+  while(*tokens){
+    printf("%s\n", *tokens);
+    tokens++;
+  }
+}
 
 /* Frees all tokens and the vector containing themx. */
-void free_tokens(char **tokens);
+void free_tokens(char **tokens)
+{
+  while(*tokens){
+    free(*tokens);
+    tokens++;
+  }
+}
 
